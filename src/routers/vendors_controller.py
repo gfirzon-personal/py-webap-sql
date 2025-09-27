@@ -79,3 +79,20 @@ def update_vendor(vendor_id: int, vendor_data: dict, response: Response):
         return {"error": str(e)}
     finally:
         pass
+
+#--------------------------------------------------------------------
+@router.delete("/{vendor_id}")
+def delete_vendor(vendor_id: int, response: Response):
+    try:
+        rows_deleted = VendorService.delete_vendor(vendor_id)
+        if rows_deleted > 0:
+            response.status_code = 200
+            return {"message": "Vendor deleted successfully"}
+        else:
+            response.status_code = 404
+            return {"error": "Vendor not found"}
+    except Exception as e:
+        response.status_code = 500
+        return {"error": str(e)}
+    finally:
+        pass

@@ -1,6 +1,5 @@
 from factories.connection_factory import ConnectionFactory
 
-
 class VendorService:
     @staticmethod
     def get_vendors():
@@ -67,3 +66,14 @@ class VendorService:
         finally:
             if conn:
                 conn.close()
+
+    @staticmethod
+    def delete_vendor(vendor_id):
+        try:
+            conn = ConnectionFactory.get_connection()
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM Vendors WHERE VendorID = ?", vendor_id)
+            conn.commit()
+            return cursor.rowcount  # Returns the number of rows deleted
+        except Exception as e:
+            raise e
