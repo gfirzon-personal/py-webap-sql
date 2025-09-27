@@ -11,3 +11,6 @@ Summary:
 ASGI is a standard interface between Python web apps and servers.
 ASGI servers (like Uvicorn, Daphne, Hypercorn) run FastAPI and other modern Python web frameworks.
 ASGI supports async features, unlike the older WSGI standard.
+
+## Get ODBC drivers SQL Server
+https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver17
