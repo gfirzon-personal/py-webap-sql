@@ -32,3 +32,21 @@ class VendorService:
         finally:
             if conn:
                 conn.close()
+
+    @staticmethod
+    def create_vendor(vendor_data):
+        try:
+            conn = ConnectionFactory.get_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "INSERT INTO Vendors (VendorName, VendorPhone, Email) OUTPUT INSERTED.VendorID VALUES (?, ?, ?)",
+                vendor_data['Name'], vendor_data['Phone'], vendor_data['Email']
+            )
+            row = cursor.fetchone()
+            conn.commit()
+            return row[0] if row else None
+        except Exception as e:
+            raise e
+        finally:
+            if conn:
+                conn.close()

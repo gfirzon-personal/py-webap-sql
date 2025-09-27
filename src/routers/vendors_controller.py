@@ -49,3 +49,16 @@ def get_vendor(vendor_id: int, response: Response):
         return {"error": str(e)}
     finally:
         pass
+
+#--------------------------------------------------------------------
+@router.post("/")
+def create_vendor(vendor_data: dict, response: Response):
+    try:
+        vendor_id = VendorService.create_vendor(vendor_data)
+        response.status_code = 201
+        return {"id": vendor_id}
+    except Exception as e:
+        response.status_code = 500
+        return {"error": str(e)}
+    finally:
+        pass
