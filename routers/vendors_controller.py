@@ -5,6 +5,7 @@ from fastapi import APIRouter, Response
 import pyodbc
 
 from factories.connection_factory import ConnectionFactory
+from services.vendor_service import VendorService
 
 router = APIRouter()
 
@@ -12,17 +13,13 @@ router = APIRouter()
 @router.get("/")
 def vendors(response: Response):
     try:
-        conn = ConnectionFactory.get_connection()
-
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM Vendors")  # Adjust the query as needed
-        rows = cursor.fetchall()
+        vendors = VendorService.get_vendors()
 
         data = {
             "app": os.getenv("APP_NAME", "N/A"),
             "version": os.getenv("VERSION", "N/A"),
             "datetime_iso": datetime.now().isoformat(),
-            "vendors": [dict(zip([column[0] for column in cursor.description], row)) for row in rows]
+            "vendors": vendors
         }
 
         response.status_code = 200  # Set the desired HTTP status code
@@ -34,5 +31,4 @@ def vendors(response: Response):
         response.status_code = 500  # Set the desired HTTP status code        
         return {"error": str(e)}          
     finally:
-        if conn:
-            conn.close()
+        pass
