@@ -32,3 +32,20 @@ def vendors(response: Response):
         return {"error": str(e)}          
     finally:
         pass
+
+#--------------------------------------------------------------------
+@router.get("/{vendor_id}")
+def get_vendor(vendor_id: int, response: Response):
+    try:
+        vendor = VendorService.get_vendor_by_id(vendor_id)
+        if vendor:
+            response.status_code = 200
+            return vendor
+        else:
+            response.status_code = 404
+            return {"error": "Vendor not found"}
+    except Exception as e:
+        response.status_code = 500
+        return {"error": str(e)}
+    finally:
+        pass

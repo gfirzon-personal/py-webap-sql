@@ -15,3 +15,20 @@ class VendorService:
         finally:
             if conn:
                 conn.close()
+
+    @staticmethod
+    def get_vendor_by_id(vendor_id):
+        try:
+            conn = ConnectionFactory.get_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Vendors WHERE VendorID = ?", vendor_id)  # Adjust the query as needed
+            row = cursor.fetchone()
+            if row:
+                return dict(zip([column[0] for column in cursor.description], row))
+            else:
+                return None
+        except Exception as e:
+            raise e
+        finally:
+            if conn:
+                conn.close()
