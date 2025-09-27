@@ -62,3 +62,20 @@ def create_vendor(vendor_data: dict, response: Response):
         return {"error": str(e)}
     finally:
         pass
+
+#--------------------------------------------------------------------
+@router.put("/{vendor_id}")
+def update_vendor(vendor_id: int, vendor_data: dict, response: Response):
+    try:
+        rows_updated = VendorService.update_vendor(vendor_id, vendor_data)
+        if rows_updated > 0:
+            response.status_code = 200
+            return {"message": "Vendor updated successfully"}
+        else:
+            response.status_code = 404
+            return {"error": "Vendor not found"}
+    except Exception as e:
+        response.status_code = 500
+        return {"error": str(e)}
+    finally:
+        pass

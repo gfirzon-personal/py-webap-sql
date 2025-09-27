@@ -50,3 +50,20 @@ class VendorService:
         finally:
             if conn:
                 conn.close()
+
+    @staticmethod
+    def update_vendor(vendor_id, vendor_data):
+        try:
+            conn = ConnectionFactory.get_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE Vendors SET VendorName = ?, VendorPhone = ?, Email = ? WHERE VendorID = ?",
+                vendor_data['Name'], vendor_data['Phone'], vendor_data['Email'], vendor_id
+            )
+            conn.commit()
+            return cursor.rowcount  # Returns the number of rows updated
+        except Exception as e:
+            raise e
+        finally:
+            if conn:
+                conn.close()
