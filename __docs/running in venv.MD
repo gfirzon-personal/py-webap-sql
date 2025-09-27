@@ -3,9 +3,16 @@
 uvicorn main:app --reload
 ```
 
+## This tells Python to include the src directory in its module search path, so imports like from common.pretty_json_response import PrettyJSONResponse will work.
+```sh
+export PYTHONPATH=src
+```
+
+
 ### run w/o reload
 ```sh
 uvicorn main:app
+uvicorn src.main:app
 ```
 
 ### endpoint links
