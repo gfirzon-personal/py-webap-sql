@@ -14,3 +14,7 @@ ASGI supports async features, unlike the older WSGI standard.
 
 ## Get ODBC drivers SQL Server
 https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver17
+
+Internet Basics HTTP
+https://www.dataprovider.com/blog/tech/internet-basics-series-3-http-requests-explained/
+https://en.wikipedia.org/wiki/Query_string
