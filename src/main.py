@@ -4,8 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from common.pretty_json_response import PrettyJSONResponse
 from common.screen_utils import clear_console
-from routers import health_controller, vendors_controller, favicon_controller
-#from src.common.pretty_json_response import PrettyJSONResponse  # Import your router
+from routers import (health_controller, greetings_controller, vendors_controller, favicon_controller)
 
 load_dotenv()  # take environment variables from .env.
 
@@ -27,6 +26,7 @@ app.add_middleware(
 )    
 
 app.include_router(health_controller.router, prefix="/health", tags=["health"])
+app.include_router(greetings_controller.router, prefix="/greetings", tags=["greetings"])
 app.include_router(vendors_controller.router, prefix="/vendors", tags=["vendors"])
 app.include_router(favicon_controller.router, prefix="/favicon", tags=["favicon"])
 
