@@ -18,3 +18,6 @@ https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-
 Internet Basics HTTP
 https://www.dataprovider.com/blog/tech/internet-basics-series-3-http-requests-explained/
 https://en.wikipedia.org/wiki/Query_string
+
+Every Type Of API You Must Know Explained!
+https://www.youtube.com/watch?v=pBASqUbZgkY
