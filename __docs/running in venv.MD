@@ -10,7 +10,7 @@ export PYTHONPATH=src
 
 ### run w/o reload
 ```sh
-uvicorn main:app
+#uvicorn main:app
 uvicorn src.main:app
 ```
 

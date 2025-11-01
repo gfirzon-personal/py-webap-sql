@@ -1,11 +1,9 @@
 import os
 from datetime import datetime
-import json
 from fastapi import APIRouter, Response
-import pyodbc
 
-from factories.connection_factory import ConnectionFactory
 from services.vendor_service import VendorService
+from models.vendor_model import VendorModel
 
 router = APIRouter()
 
@@ -13,7 +11,7 @@ router = APIRouter()
 @router.get("/")
 def vendors(response: Response):
     try:
-        vendors = VendorService.get_vendors()
+        vendors : list[VendorModel] = VendorService.get_vendors()
 
         data = {
             "app": os.getenv("APP_NAME", "N/A"),
@@ -37,7 +35,7 @@ def vendors(response: Response):
 @router.get("/{vendor_id}")
 def get_vendor(vendor_id: int, response: Response):
     try:
-        vendor = VendorService.get_vendor_by_id(vendor_id)
+        vendor : VendorModel | None = VendorService.get_vendor_by_id(vendor_id)
         if vendor:
             response.status_code = 200
             return vendor
@@ -52,9 +50,9 @@ def get_vendor(vendor_id: int, response: Response):
 
 #--------------------------------------------------------------------
 @router.post("/")
-def create_vendor(vendor_data: dict, response: Response):
+def create_vendor(vendor: VendorModel, response: Response):
     try:
-        vendor_id = VendorService.create_vendor(vendor_data)
+        vendor_id = VendorService.create_vendor(vendor)
         response.status_code = 201
         return {"id": vendor_id}
     except Exception as e:
@@ -64,10 +62,10 @@ def create_vendor(vendor_data: dict, response: Response):
         pass
 
 #--------------------------------------------------------------------
-@router.put("/{vendor_id}")
-def update_vendor(vendor_id: int, vendor_data: dict, response: Response):
+@router.put("/")
+def update_vendor(vendor: VendorModel, response: Response):
     try:
-        rows_updated = VendorService.update_vendor(vendor_id, vendor_data)
+        rows_updated = VendorService.update_vendor(vendor)
         if rows_updated > 0:
             response.status_code = 200
             return {"message": "Vendor updated successfully"}
