@@ -2,8 +2,15 @@ from factories.connection_factory import ConnectionFactory
 from models.vendor_model import VendorModel
 
 class VendorService:
+    #--------------------------------------------------------------------
     @staticmethod
     def get_vendors() -> list[VendorModel]:
+        """
+        Retrieves a list of all vendors.
+
+        :return:
+            list[VendorModel]: A list of vendor objects.
+        """
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()
@@ -16,8 +23,18 @@ class VendorService:
             if conn:
                 conn.close()
 
+    #--------------------------------------------------------------------
     @staticmethod
     def get_vendor_by_id(vendor_id) -> VendorModel | None:
+        """
+        Retrieves a vendor by their ID.
+
+        :param:
+            vendor_id (int): The ID of the vendor to retrieve.
+
+        :return:
+            VendorModel | None: The vendor object if found, otherwise None.
+        """
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()
@@ -34,8 +51,18 @@ class VendorService:
             if conn:
                 conn.close()
 
+    #--------------------------------------------------------------------
     @staticmethod
     def create_vendor(vendor: VendorModel):
+        """
+        Creates a new vendor and returns the new vendor's ID.
+
+        :param:
+            vendor (VendorModel): The vendor data to insert.
+
+        :return:
+            int: The ID of the newly created vendor.
+        """
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()
@@ -52,8 +79,18 @@ class VendorService:
             if conn:
                 conn.close()
 
+    #--------------------------------------------------------------------
     @staticmethod
-    def update_vendor(vendor: VendorModel):
+    def update_vendor(vendor: VendorModel) -> int:
+        """
+        Updates an existing vendor.
+
+        :param:
+            vendor (VendorModel): The vendor data to update.
+
+        :return:
+            int: The number of rows updated.
+        """
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()
@@ -69,8 +106,18 @@ class VendorService:
             if conn:
                 conn.close()
 
+    #--------------------------------------------------------------------
     @staticmethod
-    def delete_vendor(vendor_id):
+    def delete_vendor(vendor_id) -> int:
+        """
+        Deletes a vendor by their ID.
+
+        :param:
+            vendor_id (int): The ID of the vendor to delete.
+
+        :return:
+            int: The number of rows deleted.
+        """
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()
