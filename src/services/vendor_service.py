@@ -53,7 +53,7 @@ class VendorService:
 
     #--------------------------------------------------------------------
     @staticmethod
-    def create_vendor(vendor: VendorModel):
+    def create_vendor(vendor: VendorModel) -> int:
         """
         Creates a new vendor and returns the new vendor's ID.
 
