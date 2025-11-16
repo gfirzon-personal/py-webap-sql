@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from common.pretty_json_response import PrettyJSONResponse
@@ -24,6 +24,11 @@ app.add_middleware(
     allow_methods=["*"],  # Allow all methods
     allow_headers=["*"],  # Allow all headers
 )    
+
+# Add favicon endpoint to suppress 404 errors
+@app.get('/favicon.ico', include_in_schema=False)
+async def favicon():
+    return Response(status_code=204)
 
 app.include_router(health_controller.router, prefix="/health", tags=["health"])
 app.include_router(greetings_controller.router, prefix="/greetings", tags=["greetings"])
