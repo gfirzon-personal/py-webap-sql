@@ -36,3 +36,13 @@ git remote -v
 ```sh
 git remote prune origin
 ```
+
+### Check installed version of Git
+```sh
+git --version
+```
+
+### Check if newer version is available, install newer version if so choosen
+```sh
+git update-git-for-windows
+```
