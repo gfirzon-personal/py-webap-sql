@@ -1,0 +1,1 @@
+https://pypi.org/project/mysql-connector-python/
