@@ -8,7 +8,7 @@ from models.vendor_model import VendorModel
 router = APIRouter()
 
 #--------------------------------------------------------------------
-@router.get("/")
+@router.get("") # Note: Changed from "/" to "" to avoid conflict with other routes
 def vendors(response: Response):
     try:
         vendors : list[VendorModel] = VendorService.get_vendors()

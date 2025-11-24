@@ -1,9 +1,8 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
-from datetime import datetime
 
 class VendorModel(BaseModel):
-    VendorID: int = 0 # Default to 0 for new vendors
-    VendorName: str
-    VendorPhone: str
-    Email: str
+    VendorID: Optional[int] = Field(None, description="Primary key, auto-incremented")
+    VendorName: str = Field(..., max_length=50)
+    VendorPhone: str = Field(..., max_length=10)
+    Email: Optional[str] = Field(None, max_length=50)
