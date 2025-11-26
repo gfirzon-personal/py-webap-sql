@@ -4,7 +4,7 @@ from fastapi import APIRouter, Response, status
 
 from services.vendor_service import VendorService
 from models.vendor_model import VendorModel
-from routers.vendors_response_model import VendorResponseModel
+from models.vendors_response_models import VendorResponseModel
 
 router = APIRouter()
 
