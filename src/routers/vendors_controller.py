@@ -4,6 +4,7 @@ from fastapi import APIRouter, Response, status
 
 from services.vendor_service import VendorService
 from models.vendor_model import VendorModel
+from routers.vendors_response_model import VendorResponseModel
 
 router = APIRouter()
 
@@ -32,21 +33,28 @@ def vendors(response: Response):
         pass
 
 #--------------------------------------------------------------------
-@router.get("/{vendor_id}")
+@router.get("/{vendor_id}", response_model=VendorResponseModel)
 def get_vendor(vendor_id: int, response: Response):
     try:
-        vendor : VendorModel | None = VendorService.get_vendor_by_id(vendor_id)
+        vendor = VendorService.get_vendor_by_id(vendor_id)
+        data : dict = {
+            "app": os.getenv("APP_NAME", "N/A"),
+            "version": os.getenv("VERSION", "N/A"),
+            "datetime_iso": datetime.now().isoformat(),
+        }        
+
         if vendor:
             response.status_code = status.HTTP_200_OK
-            return vendor
+            data["vendor"] = vendor
+            return VendorResponseModel(**data)
         else:
             response.status_code = status.HTTP_404_NOT_FOUND
-            return {"error": "Vendor not found"}
+            data["error"] = "Vendor not found"            
     except Exception as e:
         response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
-        return {"error": str(e)}
+        data["error"] = str(e)
     finally:
-        pass
+        return VendorResponseModel(**data)        
 
 #--------------------------------------------------------------------
 @router.post("/")
