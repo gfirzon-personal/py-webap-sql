@@ -1,3 +1,4 @@
+import logging
 import os
 from datetime import datetime
 from fastapi import APIRouter, Response, status
@@ -7,11 +8,13 @@ from models.vendor_model import VendorModel
 from models.vendors_response_models import VendorResponseModel
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 #--------------------------------------------------------------------
 @router.get("") # Note: Changed from "/" to "" to avoid conflict with other routes
 def vendors(response: Response):
     try:
+        logger.info("Fetching vendors list endpoint called")
         vendors : list[VendorModel] = VendorService.get_vendors()
 
         data = {
@@ -24,6 +27,7 @@ def vendors(response: Response):
         response.status_code = status.HTTP_200_OK  # Set the desired HTTP status code
         response.media_type = "application/json"
         #response.body = json.dumps(data).encode('utf-8')
+        logger.info(f"Vendors list fetched successfully: {len(vendors)} vendors found")
         return data
     except Exception as e:
         #response.body = json.dumps({"error": str(e)}).encode('utf-8')

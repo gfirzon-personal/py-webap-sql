@@ -5,8 +5,11 @@ from dotenv import load_dotenv
 from common.pretty_json_response import PrettyJSONResponse
 from common.screen_utils import clear_console
 from routers import (health_controller, vendors_controller, products_controller)
+from app_logging.logging_config import setup_logging
+from app_logging.middleware import CustomValueMiddleware
 
-load_dotenv()  # take environment variables from .env.
+load_dotenv()  # take environment variables from .env file
+setup_logging()
 
 app = FastAPI(
     title = os.getenv("APP_NAME", "N/A"),
@@ -24,6 +27,9 @@ app.add_middleware(
     allow_methods=["*"],  # Allow all methods
     allow_headers=["*"],  # Allow all headers
 )    
+
+# Add custom middleware
+app.add_middleware(CustomValueMiddleware)
 
 # Add favicon endpoint to suppress 404 errors
 @app.get('/favicon.ico', include_in_schema=False)
