@@ -8,7 +8,7 @@ uvicorn main:app --reload
 export PYTHONPATH=src
 ```
 
-### run w/o reload
+### run uvicorn app w/o reload
 ```sh
 #uvicorn main:app
 uvicorn src.main:app

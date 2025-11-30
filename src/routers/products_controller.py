@@ -8,7 +8,7 @@ from src.services.product_service import ProductService
 router = APIRouter()
 
 #--------------------------------------------------------------------
-@router.get("/")
+@router.get("")
 async def get_products(response: Response):
     try:
         products : list[ProductModel] = ProductService.get_products()
