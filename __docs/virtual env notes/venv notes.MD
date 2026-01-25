@@ -23,6 +23,10 @@ source myenv/Scripts/activate
 Get-Process | Sort-Object CPU -Descending | Select-Object -First 10
 ```
 
+## for MacOS
+```sh
+source myenv/bin/activate
+```
 
 ## To deactivate any virtual environment:
 ```sh
