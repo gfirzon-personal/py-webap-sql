@@ -17,3 +17,7 @@ pip install -r requirements.txt
 ```sh
 pip install -r requirements.txt --upgrade
 ```
+
+```sh
+pip install --upgrade pip
+```

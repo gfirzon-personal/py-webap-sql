@@ -11,7 +11,13 @@ export PYTHONPATH=src
 ### run uvicorn app w/o reload
 ```sh
 #uvicorn main:app
-uvicorn src.main:app
+uvicorn src.main:app --port 8081
+```
+
+## On mac
+# Install unixodbc
+```sh
+brew install unixodbc
 ```
 
 ### endpoint links

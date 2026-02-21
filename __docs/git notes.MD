@@ -42,7 +42,28 @@ git remote prune origin
 git --version
 ```
 
-### Check if newer version is available, install newer version if so choosen
+### For WINDOWS Check if newer version is available, install newer version if so choosen
 ```sh
 git update-git-for-windows
 ```
+
+### For Mac, update git using Homebrew
+```sh
+brew upgrade git
+```
+
+## set user name and email for git globally
+```sh
+git config --global user.name "Your Full Name"
+git config --global user.email "your@email.com"
+```
+
+## verify user name and email for git globally
+```sh
+git config --global user.name
+git config --global user.email
+```
+
+## Where This Is Stored
+Mac / Linux: ~/.gitconfig
+Windows: C:\Users\YourUser\.gitconfig

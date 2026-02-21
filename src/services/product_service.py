@@ -11,6 +11,7 @@ class ProductService:
         :return:
             list[ProductModel]: A list of product objects.
         """
+        conn = None
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()

@@ -23,7 +23,7 @@ class ConnectionFactory:
         # The parentheses around the multi-line string literal allow Python 
         # to automatically concatenate the adjacent string literals into one single string.
         return (
-            "Driver={ODBC Driver 17 for SQL Server};"
+            "Driver={ODBC Driver 18 for SQL Server};"
             f"Server={os.getenv('DB_SERVER', 'localhost')};"
             f"Database={os.getenv('DB_DATABASE', 'N/A')};"
             f"Uid={os.getenv('DB_USERNAME', 'N/A')};"

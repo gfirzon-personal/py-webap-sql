@@ -11,6 +11,7 @@ class VendorService:
         :return:
             list[VendorModel]: A list of vendor objects.
         """
+        conn = None
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()
@@ -35,6 +36,7 @@ class VendorService:
         :return:
             VendorModel | None: The vendor object if found, otherwise None.
         """
+        conn = None
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()
@@ -63,6 +65,7 @@ class VendorService:
         :return:
             int: The ID of the newly created vendor.
         """
+        conn = None
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()
@@ -91,6 +94,7 @@ class VendorService:
         :return:
             int: The number of rows updated.
         """
+        conn = None
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()
@@ -118,6 +122,7 @@ class VendorService:
         :return:
             int: The number of rows deleted.
         """
+        conn = None
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()
@@ -126,3 +131,6 @@ class VendorService:
             return cursor.rowcount  # Returns the number of rows deleted
         except Exception as e:
             raise e
+        finally:
+            if conn:
+                conn.close()
