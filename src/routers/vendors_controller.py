@@ -57,9 +57,7 @@ def get_vendor(vendor_id: int, response: Response):
             data["error"] = "Vendor not found"            
     except Exception as e:
         response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
-        data["error"] = str(e)
-    finally:
-        return VendorResponseModel(**data)        
+        data["error"] = str(e)    
 
 #--------------------------------------------------------------------
 @router.post("/")

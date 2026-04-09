@@ -11,7 +11,7 @@ export PYTHONPATH=src
 ### run uvicorn app w/o reload
 ```sh
 #uvicorn main:app
-uvicorn src.main:app
+uvicorn src.main:app --port 8000
 ```
 
 ### endpoint links
