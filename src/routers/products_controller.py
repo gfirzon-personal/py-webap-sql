@@ -1,11 +1,13 @@
 import os
+import logging
 from datetime import datetime
-from fastapi import APIRouter, Response
+from fastapi import APIRouter, Response, status
 
-from models.product_model import ProductModel
+from models.product_models import ProductModel, ProductResponseModel, ProductsResponseModel
 from src.services.product_service import ProductService
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 #--------------------------------------------------------------------
 @router.get("")
@@ -20,7 +22,7 @@ async def get_products(response: Response):
             "products": products
         }
 
-        response.status_code = 200  # Set the desired HTTP status code
+        response.status_code = status.HTTP_200_OK  # Set the desired HTTP status code
         response.media_type = "application/json"
         return data
     except Exception as e:
@@ -28,3 +30,25 @@ async def get_products(response: Response):
         return {"error": str(e)}          
     finally:
         pass
+
+#--------------------------------------------------------------------
+@router.get("/{id}", response_model=ProductResponseModel)
+def get_product(id: int, response: Response):
+    try:
+        product = ProductService.get_product(id)
+        data : dict = {
+            "app": os.getenv("APP_NAME", "N/A"),
+            "version": os.getenv("VERSION", "N/A"),
+            "datetime_iso": datetime.now().isoformat(),
+        }        
+
+        if product:
+            response.status_code = status.HTTP_200_OK
+            data["product"] = product
+            return ProductResponseModel(**data)
+        else:
+            response.status_code = status.HTTP_404_NOT_FOUND
+            data["error"] = "Product not found"            
+    except Exception as e:
+        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+        data["error"] = str(e)     

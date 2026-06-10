@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import List, Optional
 
 class ProductModel(BaseModel):
     ProductID: Optional[int] = Field(None, description="Primary key, auto-incremented")
@@ -9,3 +9,17 @@ class ProductModel(BaseModel):
     SellPrice: float  # 'money' type maps to float/Decimal in Python
     DiscountPercentage: Optional[int] = None
     UnitsMax: int
+
+class ProductResponseModel(BaseModel):
+    app: str
+    version: str
+    datetime_iso: str
+    product: Optional[ProductModel] = None
+    error: Optional[str] = None
+    
+class ProductsResponseModel(BaseModel):
+    app: str
+    version: str
+    datetime_iso: str
+    products: List[ProductModel]
+

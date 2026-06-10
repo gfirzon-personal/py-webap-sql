@@ -1,5 +1,9 @@
+import logging
+
 from factories.connection_factory import ConnectionFactory
 from models.vendor_model import VendorModel
+
+logger = logging.getLogger(__name__)
 
 class VendorService:
     #--------------------------------------------------------------------
@@ -26,7 +30,7 @@ class VendorService:
 
     #--------------------------------------------------------------------
     @staticmethod
-    def get_vendor_by_id(vendor_id) -> VendorModel | None:
+    def get_vendor_by_id(vendor_id: int) -> VendorModel | None:
         """
         Retrieves a vendor by their ID.
 
@@ -40,7 +44,9 @@ class VendorService:
         try:
             conn = ConnectionFactory.get_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Vendors WHERE VendorID = ?", vendor_id)  # Adjust the query as needed
+            query = "SELECT * FROM Vendors WHERE VendorID = ?"
+            logger.debug(f"Executing query: {query} with vendor_id: {vendor_id}")
+            cursor.execute(query, (vendor_id,))  # Adjust the query as needed
             row = cursor.fetchone()
             if row:
                 # The ** is Python's dictionary unpacking operator.

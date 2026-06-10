@@ -1,5 +1,5 @@
 from factories.connection_factory import ConnectionFactory
-from src.models.product_model import ProductModel
+from models.product_models import ProductModel
 
 class ProductService:
     #--------------------------------------------------------------------
@@ -23,3 +23,33 @@ class ProductService:
         finally:
             if conn:
                 conn.close()
+
+    #--------------------------------------------------------------------
+    @staticmethod
+    def get_product(product_id: int) -> ProductModel | None:
+        """
+        Retrieves a product by its ID.
+
+        :param:
+            product_id (int): The ID of the product to retrieve.
+
+        :return:
+            ProductModel | None: The product object if found, otherwise None.
+        """
+        conn = None
+        try:
+            conn = ConnectionFactory.get_connection()
+            cursor = conn.cursor()
+            query = "SELECT * FROM Products WHERE ProductID = ?"
+            cursor.execute(query, (product_id,))  # Adjust the query as needed
+            row = cursor.fetchone()
+            if row:
+                # The ** is Python's dictionary unpacking operator.
+                return ProductModel(**dict(zip([column[0] for column in cursor.description], row)))
+            else:
+                return None
+        except Exception as e:
+            raise e
+        finally:
+            if conn:
+                conn.close()                
