@@ -52,3 +52,16 @@ def get_product(id: int, response: Response):
     except Exception as e:
         response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
         data["error"] = str(e)     
+
+#--------------------------------------------------------------------
+@router.post("")
+def create(product: ProductModel, response: Response):
+    try:
+        product_id = ProductService.create(product)
+        response.status_code = status.HTTP_201_CREATED
+        return {"id": product_id}
+    except Exception as e:
+        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return {"error": str(e)}
+    finally:
+        pass        
