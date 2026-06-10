@@ -1,5 +1,9 @@
+import os
+import logging
 from factories.connection_factory import ConnectionFactory
 from models.product_models import ProductModel
+
+logger = logging.getLogger(__name__)
 
 class ProductService:
     #--------------------------------------------------------------------
