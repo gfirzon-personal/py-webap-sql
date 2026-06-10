@@ -65,3 +65,37 @@ def create(product: ProductModel, response: Response):
         return {"error": str(e)}
     finally:
         pass        
+
+#--------------------------------------------------------------------
+@router.put("")
+def update(product: ProductModel, response: Response):
+    try:
+        rows_updated = ProductService.update(product)
+        if rows_updated > 0:
+            response.status_code = status.HTTP_200_OK
+            return {"message": "Product updated successfully"}
+        else:
+            response.status_code = status.HTTP_404_NOT_FOUND
+            return {"error": "Product not found"}
+    except Exception as e:
+        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return {"error": str(e)}
+    finally:
+        pass 
+
+#--------------------------------------------------------------------
+@router.delete("/{id}")
+def delete(id: int, response: Response):
+    try:
+        rows_deleted = ProductService.delete(id)
+        if rows_deleted > 0:
+            response.status_code = status.HTTP_200_OK
+            return {"message": "Product deleted successfully"}
+        else:
+            response.status_code = status.HTTP_404_NOT_FOUND
+            return {"error": "Product not found"}
+    except Exception as e:
+        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return {"error": str(e)}
+    finally:
+        pass

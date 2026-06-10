@@ -86,4 +86,64 @@ class ProductService:
             raise e
         finally:
             if conn:
-                conn.close()                             
+                conn.close()        
+
+    #--------------------------------------------------------------------
+    @staticmethod
+    def update(product: ProductModel) -> int:
+        """
+        Updates an existing product.
+
+        :param:
+            product (ProductModel): The product data to update.
+
+        :return:
+            int: The number of rows updated.
+        """
+        conn = None
+        try:
+            conn = ConnectionFactory.get_connection()
+            cursor = conn.cursor()
+            query = """
+                UPDATE Products 
+                SET ProductName = ?, ProductDescription = ?, UnitsInStock = ?, SellPrice = ?, DiscountPercentage = ?, UnitsMax = ? 
+                WHERE ProductID = ?
+            """ 
+            cursor.execute(
+                query,
+                (product.ProductName, product.ProductDescription, product.UnitsInStock, product.SellPrice, 
+                 product.DiscountPercentage, product.UnitsMax, product.ProductID)
+            )
+            conn.commit()
+            return cursor.rowcount  # Returns the number of rows updated
+        except Exception as e:
+            raise e
+        finally:
+            if conn:
+                conn.close()            
+
+    #--------------------------------------------------------------------
+    @staticmethod
+    def delete(id: int) -> int:
+        """
+        Deletes a product by its ID.
+
+        :param:
+            id (int): The ID of the product to delete.
+
+        :return:
+            int: The number of rows deleted.
+        """
+        conn = None
+        try:
+            conn = ConnectionFactory.get_connection()
+            cursor = conn.cursor()
+            query = "DELETE FROM Products WHERE ProductID = ?"
+            cursor.execute(query, (id,))
+            conn.commit()
+            return cursor.rowcount  # Returns the number of rows deleted
+        except Exception as e:
+            raise e
+        finally:
+            if conn:
+                conn.close()                                         
