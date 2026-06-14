@@ -1,27 +1,28 @@
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 class ConnectionFactory:
     """Factory class to create database connections."""
 
-    #------------------------------------------------------
     @staticmethod
     def get_connection():
-        """Create and return a new database connection."""
-        import pyodbc
-        return pyodbc.connect(ConnectionFactory.get_connection_string())
-
-    #------------------------------------------------------
-    @staticmethod
-    def get_connection_string() -> str:
-        """
-        Build and return the database connection string.
-        Uses environment variables for configuration.
+        db_type = os.getenv('DB_TYPE', 'sqlserver').lower()
         
-        returns: str: The database connection string.
-        """
+        if db_type == 'sqlite':
+            import sqlite3
+            db_path = os.getenv('SQLITE_DB_PATH', 'database.db')
+            logger.info(f"Connecting to SQLite database at {db_path}")
+            return sqlite3.connect(db_path)
+        else:
+            import pyodbc
+            logger.info("Connecting to SQL Server database")
+            return pyodbc.connect(ConnectionFactory.get_connection_string())
 
-        # The parentheses around the multi-line string literal allow Python 
-        # to automatically concatenate the adjacent string literals into one single string.
+
+    @staticmethod
+    def get_connection_string():
         return (
             "Driver={ODBC Driver 18 for SQL Server};"
             f"Server={os.getenv('DB_SERVER', 'localhost')};"
