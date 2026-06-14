@@ -1,17 +1,4 @@
-# Requirements for FastAPI application with SQL Server connectivity
-
-# Core dependencies
-python-dotenv==1.2.1
-
-# Web framework
-fastapi==0.136.3
-uvicorn==0.49.0
-
-# Database connectivity
-sqlalchemy==2.0.50 # For database interactions
-databases==0.9.0 # For async database support
-pyodbc==5.3.0 # open source Python module that makes accessing ODBC databases simple
-
-# Data validation
-pydantic==2.13.4 # For data validation and settings management
-email-validator==2.3.0 # For validating email addresses with Pydantic
+## Py script to create SQL Lite database
+```sh
+python ./src/services/sqlite_table_creator.py 
+```
