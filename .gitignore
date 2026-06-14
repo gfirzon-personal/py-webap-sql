@@ -164,3 +164,7 @@ logs/
 # Temporary files
 temp/
 tmp/
+
+# SQLite database files
+*.sqlite3
+*.db
