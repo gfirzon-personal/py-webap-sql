@@ -4,7 +4,7 @@ from datetime import datetime
 from fastapi import APIRouter, Response, status
 
 from models.product_models import ProductModel, ProductResponseModel, ProductsResponseModel
-from src.services.product_service import ProductService
+from services.product_service import ProductService
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
