@@ -4,12 +4,12 @@ from typing import Protocol
 from models.product_models import ProductModel
 
 class ProductRepository(Protocol):
-    def get_product_by_id(self, product_id: int) -> ProductModel:
-        """Fetch a product by its ID."""
-        pass
-
     def list_products(self) -> list[ProductModel]:
         """List all products."""
+        pass
+
+    def get_product_by_id(self, product_id: int) -> ProductModel | None:
+        """Fetch a product by its ID."""
         pass
 
     def create_product(self, product_data: dict) -> dict:

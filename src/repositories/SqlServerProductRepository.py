@@ -5,7 +5,8 @@ class SqlServerProductRepository:
    def __init__(self, connection):
       self.connection = connection
 
-   def list_products(self) -> list:
+   #--------------------------------------------------------------------
+   def list_products(self) -> list[ProductModel]:
       try:
          cursor = self.connection.cursor()
          query = "SELECT * FROM Products"
@@ -17,6 +18,7 @@ class SqlServerProductRepository:
       finally:
          cursor.close()
 
+   #--------------------------------------------------------------------
    def get_product_by_id(self, product_id) -> ProductModel | None:
       try:
          cursor = self.connection.cursor()
@@ -25,10 +27,10 @@ class SqlServerProductRepository:
          cursor.execute(query, (product_id,))  # Adjust the query as needed
          row = cursor.fetchone()
          if row:
-               # The ** is Python's dictionary unpacking operator.
-               return ProductModel(**dict(zip([column[0] for column in cursor.description], row)))
+            # The ** is Python's dictionary unpacking operator.
+            return ProductModel(**dict(zip([column[0] for column in cursor.description], row)))
          else:
-               return None
+            return None
       except Exception as e:
          raise e
       finally:
