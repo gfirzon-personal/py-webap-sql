@@ -13,6 +13,6 @@ class ProductService:
    def list_products(self) -> list[ProductModel]:
       return self.repo.list_products()
    
-   def get_product(self, product_id: int) -> ProductModel:
+   def get_product(self, product_id: int) -> ProductModel | None:
       """Fetch a product by its ID."""
       return self.repo.get_product_by_id(product_id)
