@@ -5,9 +5,14 @@ from fastapi import APIRouter, Depends, Response, status
 
 from models.product_models import ProductModel, ProductResponseModel, ProductsResponseModel
 from services.product_service import ProductService
+from factories.product_repository_factory import ProductRepositoryFactory
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
+
+def get_product_service() -> ProductService:
+    repo = ProductRepositoryFactory.create()
+    return ProductService(repo)
 
 #--------------------------------------------------------------------
 @router.get("")

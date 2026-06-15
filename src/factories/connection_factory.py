@@ -7,8 +7,9 @@ class ConnectionFactory:
     """Factory class to create database connections."""
 
     @staticmethod
-    def get_connection():
-        db_type = os.getenv('DB_TYPE', 'sqlserver').lower()
+    def get_connection(db_type: str = None):
+        # if db_type is None:
+        #     db_type = os.getenv('DB_TYPE', 'sqlserver').lower()
         
         if db_type == 'sqlite':
             import sqlite3
