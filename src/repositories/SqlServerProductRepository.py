@@ -1,25 +1,36 @@
 from models.product_models import ProductModel
+from src.factories.connection_factory import ConnectionFactory
 
 class SqlServerProductRepository:
-    def __init__(self, connection):
-        self.connection = connection
+   def __init__(self, connection):
+      self.connection = connection
 
-    def list_products(self) -> list:
+   def list_products(self) -> list:
       try:
-          cursor = self.connection.cursor()
-          query = "SELECT * FROM Products"
-          cursor.execute(query)  
-          rows = cursor.fetchall()
-          return [ProductModel(**dict(zip([column[0] for column in cursor.description], row))) for row in rows]
+         cursor = self.connection.cursor()
+         query = "SELECT * FROM Products"
+         cursor.execute(query)  
+         rows = cursor.fetchall()
+         return [ProductModel(**dict(zip([column[0] for column in cursor.description], row))) for row in rows]
       except Exception as e:
-          raise e
+         raise e
       finally:
-          cursor.close()
+         cursor.close()
 
-    def get_product_by_id(self, product_id):
-        cursor = self.connection.cursor()
-        query = "SELECT * FROM Products WHERE ProductID = ?"
-        cursor.execute(query, (product_id,))
-        result = cursor.fetchone()
-        cursor.close()
-        return result
+   def get_product_by_id(self, product_id) -> ProductModel | None:
+      try:
+         cursor = self.connection.cursor()
+
+         query = "SELECT * FROM Products WHERE ProductID = ?"
+         cursor.execute(query, (product_id,))  # Adjust the query as needed
+         row = cursor.fetchone()
+         if row:
+               # The ** is Python's dictionary unpacking operator.
+               return ProductModel(**dict(zip([column[0] for column in cursor.description], row)))
+         else:
+               return None
+      except Exception as e:
+         raise e
+      finally:
+         if cursor:
+               cursor.close()

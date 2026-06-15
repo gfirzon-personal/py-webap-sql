@@ -41,9 +41,13 @@ async def get_products(
 
 #--------------------------------------------------------------------
 @router.get("/{id}", response_model=ProductResponseModel)
-def get_product(id: int, response: Response):
+def get_product(
+        id: int, 
+        response: Response,
+        service: ProductService = Depends(get_product_service)
+    ):
     try:
-        product = ProductService.get_product(id)
+        product = service.get_product(id)
         data : dict = {
             "app": os.getenv("APP_NAME", "N/A"),
             "version": os.getenv("VERSION", "N/A"),
@@ -65,7 +69,7 @@ def get_product(id: int, response: Response):
 @router.post("")
 def create(product: ProductModel, response: Response):
     try:
-        product_id = ProductService.create(product)
+        product_id = get_product_service().create(product)
         response.status_code = status.HTTP_201_CREATED
         return {"id": product_id}
     except Exception as e:
@@ -78,7 +82,7 @@ def create(product: ProductModel, response: Response):
 @router.put("")
 def update(product: ProductModel, response: Response):
     try:
-        rows_updated = ProductService.update(product)
+        rows_updated = get_product_service().update(product)
         if rows_updated > 0:
             response.status_code = status.HTTP_200_OK
             return {"message": "Product updated successfully"}
@@ -95,7 +99,7 @@ def update(product: ProductModel, response: Response):
 @router.delete("/{id}")
 def delete(id: int, response: Response):
     try:
-        rows_deleted = ProductService.delete(id)
+        rows_deleted = get_product_service().delete(id)
         if rows_deleted > 0:
             response.status_code = status.HTTP_200_OK
             return {"message": "Product deleted successfully"}

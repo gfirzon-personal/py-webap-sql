@@ -12,3 +12,7 @@ class ProductService:
 
    def list_products(self) -> list[ProductModel]:
       return self.repo.list_products()
+   
+   def get_product(self, product_id: int) -> ProductModel:
+      """Fetch a product by its ID."""
+      return self.repo.get_product_by_id(product_id)
