@@ -32,7 +32,7 @@ def vendors(response: Response):
     except Exception as e:
         #response.body = json.dumps({"error": str(e)}).encode('utf-8')
         logger.error(f"Error fetching vendors list: {str(e)}")
-        response.status_code = 500  # Set the desired HTTP status code        
+        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR  # Set the desired HTTP status code
         return {"error": str(e)}          
     finally:
         pass
