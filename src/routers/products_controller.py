@@ -1,7 +1,7 @@
 import os
 import logging
 from datetime import datetime
-from fastapi import APIRouter, Response, status
+from fastapi import APIRouter, Depends, Response, status
 
 from models.product_models import ProductModel, ProductResponseModel, ProductsResponseModel
 from services.product_service import ProductService
@@ -11,9 +11,12 @@ logger = logging.getLogger(__name__)
 
 #--------------------------------------------------------------------
 @router.get("")
-async def get_products(response: Response):
+async def get_products(
+    response: Response,
+    service: ProductService = Depends(get_product_service)
+    ):
     try:
-        products : list[ProductModel] = ProductService.get_products()
+        products : list[ProductModel] = service.list_products()
 
         data = {
             "app": os.getenv("APP_NAME", "N/A"),
