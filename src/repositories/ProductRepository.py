@@ -36,7 +36,7 @@ class ProductRepository(Protocol):
         """
         pass
 
-    def delete_product(self, product_id: int) -> int:
+    def delete(self, product_id: int) -> int:
         """
         Delete a product by its ID.
 

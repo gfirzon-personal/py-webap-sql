@@ -24,3 +24,7 @@ class ProductService:
    def update(self, product: ProductModel) -> int:
       """Update an existing product."""
       return self.repo.update(product)
+   
+   def delete(self, product_id: int) -> int:
+      """Delete a product by its ID."""
+      return self.repo.delete(product_id)

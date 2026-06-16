@@ -1,5 +1,4 @@
 from models.product_models import ProductModel
-from src.factories.connection_factory import ConnectionFactory
 
 class SqlServerProductRepository:
    def __init__(self, connection):
@@ -101,3 +100,27 @@ class SqlServerProductRepository:
       finally:
          if cursor:
             cursor.close()
+
+   #--------------------------------------------------------------------
+   def delete(self, product_id: int) -> int:
+      """
+      Deletes a product by its ID.
+
+      :param:
+         product_id (int): The ID of the product to delete.
+
+      :return:
+         int: The number of rows deleted.
+      """
+      try:
+         cursor = self.connection.cursor()
+
+         query = "DELETE FROM Products WHERE ProductID = ?"
+         cursor.execute(query, (product_id,))
+         self.connection.commit()
+         return cursor.rowcount  # Returns the number of rows deleted
+      except Exception as e:
+         raise e
+      finally:
+         if cursor:
+               cursor.close()
