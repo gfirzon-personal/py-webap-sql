@@ -53,10 +53,10 @@ class SqlServerProductRepository:
       try:
          cursor = self.connection.cursor()
          query = """
-               INSERT INTO Products 
-               (ProductName, ProductDescription, UnitsInStock, SellPrice, DiscountPercentage, UnitsMax) 
-               OUTPUT INSERTED.ProductID 
-               VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO Products 
+            (ProductName, ProductDescription, UnitsInStock, SellPrice, DiscountPercentage, UnitsMax) 
+            OUTPUT INSERTED.ProductID 
+            VALUES (?, ?, ?, ?, ?, ?)
          """
          cursor.execute(
             query,
