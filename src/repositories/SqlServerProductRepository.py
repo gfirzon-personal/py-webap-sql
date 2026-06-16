@@ -1,4 +1,7 @@
+import logging
 from models.product_models import ProductModel
+
+logger = logging.getLogger(__name__)
 
 class SqlServerProductRepository:
    def __init__(self, connection):
@@ -56,9 +59,9 @@ class SqlServerProductRepository:
                VALUES (?, ?, ?, ?, ?, ?)
          """
          cursor.execute(
-               query,
-               (product.ProductName, product.ProductDescription, product.UnitsInStock, 
-                product.SellPrice, product.DiscountPercentage, product.UnitsMax)
+            query,
+            (product.ProductName, product.ProductDescription, product.UnitsInStock, 
+               product.SellPrice, product.DiscountPercentage, product.UnitsMax)
          )
          row = cursor.fetchone()
          self.connection.commit()
@@ -118,6 +121,7 @@ class SqlServerProductRepository:
          query = "DELETE FROM Products WHERE ProductID = ?"
          cursor.execute(query, (product_id,))
          self.connection.commit()
+         logger.info(f"Deleted product with ID {product_id}, rows affected: {cursor.rowcount}")
          return cursor.rowcount  # Returns the number of rows deleted
       except Exception as e:
          raise e
