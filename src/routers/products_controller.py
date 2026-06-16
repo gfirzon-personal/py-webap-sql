@@ -84,9 +84,13 @@ def create(
 
 #--------------------------------------------------------------------
 @router.put("")
-def update(product: ProductModel, response: Response):
+def update(
+    product: ProductModel, 
+    response: Response,
+    service: ProductService = Depends(get_product_service)
+    ):
     try:
-        rows_updated = get_product_service().update(product)
+        rows_updated = service.update(product)
         if rows_updated > 0:
             response.status_code = status.HTTP_200_OK
             return {"message": "Product updated successfully"}

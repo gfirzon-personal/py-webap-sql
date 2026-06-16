@@ -5,7 +5,9 @@ from models.product_models import ProductModel
 
 class ProductRepository(Protocol):
     def list_products(self) -> list[ProductModel]:
-        """List all products."""
+        """
+        List all products.
+        :return: A list of ProductModel instances."""
         pass
 
     def get_product_by_id(self, product_id: int) -> ProductModel | None:
@@ -25,14 +27,20 @@ class ProductRepository(Protocol):
         :return: The ID of the created product."""
         pass
 
-    def update_product(self, product_id: int, product_data: dict) -> dict:
-        """Update an existing product."""
+    def update(self, product: ProductModel) -> int:
+        """
+        Update an existing product.
+
+        :param product: The product data to update.
+        :return: The number of rows updated.
+        """
         pass
 
-    def delete_product(self, product_id: int) -> None:
+    def delete_product(self, product_id: int) -> int:
         """
         Delete a product by its ID.
 
         :param product_id: The ID of the product to delete.
+        :return: The number of rows deleted.
         """
         pass

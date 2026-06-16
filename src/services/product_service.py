@@ -20,3 +20,7 @@ class ProductService:
    def create(self, product: ProductModel) -> int:
       """Create a new product."""
       return self.repo.create(product)
+   
+   def update(self, product: ProductModel) -> int:
+      """Update an existing product."""
+      return self.repo.update(product)

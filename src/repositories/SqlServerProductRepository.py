@@ -68,4 +68,36 @@ class SqlServerProductRepository:
          raise e
       finally:
          if cursor:
-               cursor.close()                
+               cursor.close()               
+
+   #--------------------------------------------------------------------
+   def update(self, product: ProductModel) -> int:
+      """
+      Updates an existing product.
+
+      :param:
+         product (ProductModel): The product data to update.
+
+      :return:
+         int: The number of rows updated.
+      """
+      try:
+         cursor = self.connection.cursor()
+         query = """
+            UPDATE Products 
+            SET ProductName = ?, ProductDescription = ?, UnitsInStock = ?, 
+                  SellPrice = ?, DiscountPercentage = ?, UnitsMax = ? 
+            WHERE ProductID = ?
+         """ 
+         cursor.execute(
+               query,
+               (product.ProductName, product.ProductDescription, product.UnitsInStock, product.SellPrice, 
+               product.DiscountPercentage, product.UnitsMax, product.ProductID)
+         )
+         self.connection.commit()
+         return cursor.rowcount  # Returns the number of rows updated
+      except Exception as e:
+         raise e
+      finally:
+         if cursor:
+            cursor.close()
