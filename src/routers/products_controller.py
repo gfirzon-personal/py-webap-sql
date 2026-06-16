@@ -67,9 +67,13 @@ def get_product(
 
 #--------------------------------------------------------------------
 @router.post("")
-def create(product: ProductModel, response: Response):
+def create(
+    product: ProductModel, 
+    response: Response,
+    service: ProductService = Depends(get_product_service)
+    ):
     try:
-        product_id = get_product_service().create(product)
+        product_id = service.create(product)
         response.status_code = status.HTTP_201_CREATED
         return {"id": product_id}
     except Exception as e:

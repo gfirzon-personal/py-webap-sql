@@ -9,11 +9,20 @@ class ProductRepository(Protocol):
         pass
 
     def get_product_by_id(self, product_id: int) -> ProductModel | None:
-        """Fetch a product by its ID."""
+        """
+        Fetch a product by its ID.
+
+        :param product_id: The ID of the product to fetch.
+        :return: The product if found, otherwise None.
+        """
         pass
 
-    def create_product(self, product_data: dict) -> dict:
-        """Create a new product."""
+    def create(self, product: ProductModel) -> int:
+        """
+        Create a new product.
+
+        :param product: The product to create.
+        :return: The ID of the created product."""
         pass
 
     def update_product(self, product_id: int, product_data: dict) -> dict:
@@ -21,5 +30,9 @@ class ProductRepository(Protocol):
         pass
 
     def delete_product(self, product_id: int) -> None:
-        """Delete a product by its ID."""
+        """
+        Delete a product by its ID.
+
+        :param product_id: The ID of the product to delete.
+        """
         pass

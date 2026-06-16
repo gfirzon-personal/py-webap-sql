@@ -16,3 +16,7 @@ class ProductService:
    def get_product(self, product_id: int) -> ProductModel | None:
       """Fetch a product by its ID."""
       return self.repo.get_product_by_id(product_id)
+   
+   def create(self, product: ProductModel) -> int:
+      """Create a new product."""
+      return self.repo.create(product)

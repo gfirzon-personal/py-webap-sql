@@ -36,3 +36,36 @@ class SqlServerProductRepository:
       finally:
          if cursor:
                cursor.close()
+
+   #--------------------------------------------------------------------
+   def create(self, product: ProductModel) -> int:
+      """
+      Creates a new product and returns the new product's ID.
+
+      :param:
+         product (ProductModel): The product data to insert.
+
+      :return:
+         int: The ID of the newly created product.
+      """
+      try:
+         cursor = self.connection.cursor()
+         query = """
+               INSERT INTO Products 
+               (ProductName, ProductDescription, UnitsInStock, SellPrice, DiscountPercentage, UnitsMax) 
+               OUTPUT INSERTED.ProductID 
+               VALUES (?, ?, ?, ?, ?, ?)
+         """
+         cursor.execute(
+               query,
+               (product.ProductName, product.ProductDescription, product.UnitsInStock, 
+                product.SellPrice, product.DiscountPercentage, product.UnitsMax)
+         )
+         row = cursor.fetchone()
+         self.connection.commit()
+         return row[0] if row else None
+      except Exception as e:
+         raise e
+      finally:
+         if cursor:
+               cursor.close()                
