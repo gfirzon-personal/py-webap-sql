@@ -3,8 +3,9 @@ from models.product_models import ProductModel
 
 logger = logging.getLogger(__name__)
 
-class SqlServerProductRepository:
+class SqlLiteProductRepository:
    def __init__(self, connection):
+      logger.info("Initializing SqlLiteProductRepository with provided connection.")
       self.connection = connection
 
    #--------------------------------------------------------------------
@@ -16,6 +17,7 @@ class SqlServerProductRepository:
          rows = cursor.fetchall()
          return [ProductModel(**dict(zip([column[0] for column in cursor.description], row))) for row in rows]
       except Exception as e:
+         logger.error("Error occurred while listing products: %s", e)
          raise e
       finally:
          cursor.close()
@@ -34,6 +36,7 @@ class SqlServerProductRepository:
          else:
             return None
       except Exception as e:
+         logger.error("Error occurred while getting product by ID: %s", e)
          raise e
       finally:
          if cursor:
@@ -66,6 +69,7 @@ class SqlServerProductRepository:
          self.connection.commit()
          return row[0] if row else None
       except Exception as e:
+         logger.error("Error occurred while creating product: %s", e)
          raise e
       finally:
          if cursor:
@@ -98,6 +102,7 @@ class SqlServerProductRepository:
          self.connection.commit()
          return cursor.rowcount  # Returns the number of rows updated
       except Exception as e:
+         logger.error("Error occurred while updating product: %s", e)
          raise e
       finally:
          if cursor:
@@ -123,6 +128,7 @@ class SqlServerProductRepository:
          logger.info(f"Deleted product with ID {product_id}, rows affected: {cursor.rowcount}")
          return cursor.rowcount  # Returns the number of rows deleted
       except Exception as e:
+         logger.error("Error occurred while deleting product: %s", e)
          raise e
       finally:
          if cursor:
