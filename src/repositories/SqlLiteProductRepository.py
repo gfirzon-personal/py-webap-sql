@@ -6,13 +6,21 @@ logger = logging.getLogger(__name__)
 class SqlLiteProductRepository:
    def __init__(self, connection):
       logger.info("Initializing SqlLiteProductRepository with provided connection.")
+      if connection is None:
+         logger.error("Connection cannot be None.")
+         raise ValueError("Connection cannot be None.")
       self.connection = connection
 
    #--------------------------------------------------------------------
    def list_products(self) -> list[ProductModel]:
       try:
-         cursor = self.connection.cursor()
+         # cursor = self.connection.cursor()
+         import sqlite3
+
+         db_path = "mydatabase.db"  # Adjust the path as needed
+         local_conn=sqlite3.connect(db_path)
          query = "SELECT * FROM Products"
+         cursor = local_conn.cursor()
          cursor.execute(query)  
          rows = cursor.fetchall()
          return [ProductModel(**dict(zip([column[0] for column in cursor.description], row))) for row in rows]
