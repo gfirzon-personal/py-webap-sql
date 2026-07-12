@@ -10,7 +10,9 @@ from factories.product_repository_factory import ProductRepositoryFactory
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
+#--------------------------------------------------------------------
 def get_product_service() -> ProductService:
+    """Dependency function to provide a ProductService instance."""
     repo = ProductRepositoryFactory.create()
     return ProductService(repo)
 
